@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import url("../node_modules/bootstrap/dist/css/bootstrap.min.css"); */
+
+html, body { height: 100%; }
+
+.tela { margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-image: url(assets/unnamed.png) ;
+    background-repeat: no-repeat;
+    background-position: 50% 10vh;
+    background-size: contain;
+    background-color: rgba(159, 211, 211, 0.425);
+    
+}

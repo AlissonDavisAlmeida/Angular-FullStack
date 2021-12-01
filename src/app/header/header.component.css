@@ -1,0 +1,19 @@
+
+.menuBar{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
+}
+.icone{
+    margin-right: 10px;
+}
+
+.botao{
+    margin-left: auto;
+    color: white;
+   
+    
+}

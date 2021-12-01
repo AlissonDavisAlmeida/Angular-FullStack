@@ -1,0 +1,21 @@
+
+
+
+    <mat-card class="principal">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nome do Pet</mat-label>
+            <input matInput #nome #title="ngModel" required ngModel>
+            <mat-error *ngIf="title.invalid">O campo Nome está inválido</mat-error>
+        </mat-form-field>
+        <mat-form-field >
+            
+            <textarea matInput color="primary" cols="30" rows="10"  #newPost required ngModel #content = "ngModel" placeholder="Descrição do animal"></textarea>
+            <hr>
+            
+            <mat-error *ngIf="content.invalid">O campo conteúdo está inválido</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="adicionarPost(nome,newPost)">Adicionar</button>
+        
+    </mat-card>
+

@@ -1,0 +1,12 @@
+.principal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   width: 50vh;
+   margin: auto;
+   margin-top: 10%;
+    background-color: rgba(66, 59, 59, 0.459);
+    color: rgb(252, 252, 252);
+    border-radius: 20px;
+}

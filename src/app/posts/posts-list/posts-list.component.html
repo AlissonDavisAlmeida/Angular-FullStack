@@ -1,0 +1,20 @@
+
+<div class="painel" >
+    
+<mat-accordion >
+    
+    <mat-expansion-panel *ngFor="let post of posts ; let i = index" >
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{post.titulo}}                         
+            </mat-panel-title>
+           
+        </mat-expansion-panel-header>
+        {{post.conteudo}}
+        <mat-action-row class="expansionPanel">
+            <button mat-button color="accent">Editar</button>
+            <button mat-button color="warn">Remover</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>
+</div>
