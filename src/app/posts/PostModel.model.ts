@@ -1,26 +1,28 @@
-export class PostModel{
-    #titulo : string
-    #conteudo : string
+export class PostModel {
+    #titulo : string;
 
+    _id : string;
 
-    constructor(titulo, conteudo){
-        this.#titulo = titulo
-        this.#conteudo = conteudo
+    #conteudo : string;
+
+    constructor(titulo, conteudo) {
+      this.#titulo = titulo;
+      this.#conteudo = conteudo;
     }
 
-    get titulo(){
-        return this.#titulo
+    get titulo() {
+      return this.#titulo;
     }
 
-    get conteudo(){
-        return this.#conteudo
+    get conteudo() {
+      return this.#conteudo;
     }
 
-    set titulo(titulo : string){
-        this.#titulo = titulo
+    set titulo(titulo : string) {
+      this.#titulo = titulo;
     }
 
-    set conteudo(conteudo : string){
-        this.#conteudo = conteudo
+    set conteudo(conteudo : string) {
+      this.#conteudo = conteudo;
     }
 }

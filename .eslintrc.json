@@ -52,7 +52,14 @@
         "@typescript-eslint/no-empty-function":"off",
         "@typescript-eslint/quotes": ["warn","double",{"avoidEscape":true,"allowTemplateLiterals":true}],
         "@angular-eslint/no-empty-lifecycle-method":"off",
-        "class-methods-use-this":"off"
+        "class-methods-use-this":"off",
+        "import/no-extraneous-dependencies":"off",
+        "no-restricted-globals":"off",
+        "@typescript-eslint/no-use-before-define":"off",
+        "@typescript-eslint/no-unused-vars":"off",
+        "no-param-reassign":"off",
+       "@typescript-eslint/no-shadow":"off"
+
       }
     },
     {

@@ -1,27 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppComponent } from './app.component';
-import { PostsComponent } from './posts/posts.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import { HeaderComponent } from './header/header.component';
-import { PostsListComponent } from './posts/posts-list/posts-list.component';
-import {MatExpansionModule} from '@angular/material/expansion';
-
-
-
-
-
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { RouterModule } from "@angular/router";
+import { HeaderComponent } from "./header/header.component";
+import { PostsListComponent } from "./posts/posts-list/posts-list.component";
+import { PostCreateComponent } from "./posts/post-create/post-create.component";
+import { PostsComponent } from "./posts/posts.component";
+import { AppComponent } from "./app.component";
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -29,10 +26,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
     PostsComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostsListComponent
+    PostsListComponent,
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     FormsModule, BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -41,9 +38,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatInputModule,
     MatCardModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule,
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,7 +1,12 @@
 .painel{
     
-    width: 30%;
-    margin: auto;
-    margin-top: 20px;
-   
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+}
+.titulo{
+    font-size: 25px;
+    font-weight: 700;
 }
