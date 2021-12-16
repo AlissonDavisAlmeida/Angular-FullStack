@@ -10,3 +10,6 @@
     font-size: 25px;
     font-weight: 700;
 }
+mat-progress-spinner{
+    margin: auto;
+}

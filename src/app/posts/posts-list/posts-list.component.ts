@@ -14,6 +14,8 @@ export class PostsListComponent implements OnInit, OnDestroy {
 
   posts :PostModel[];
 
+  isLoading = false;
+
   constructor(private postService : PostService) {
 
   }
@@ -30,7 +32,9 @@ export class PostsListComponent implements OnInit, OnDestroy {
   }
 
   removerPet(indice : string) {
+    this.isLoading = true;
     console.log(indice);
     this.postService.deletarPet(indice);
+    this.isLoading = false;
   }
 }

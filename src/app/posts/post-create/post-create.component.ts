@@ -1,7 +1,9 @@
 import {
   Component, EventEmitter, Input, OnInit, Output,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
+import { mimeType } from "./mime-type.validator";
 import { PostService } from "../post.service";
 import { PostModel } from "../PostModel.model";
 
@@ -11,20 +13,74 @@ import { PostModel } from "../PostModel.model";
   styleUrls: ["./post-create.component.css"],
 })
 export class PostCreateComponent implements OnInit {
-  constructor(private postService : PostService, private router : Router) { }
+  mode = "create";
+
+  myForm : FormGroup;
+
+  isLoading = false;
+
+  post : PostModel = null;
+
+  imagePreview : string = "";
+
+  Id : string;
+
+  constructor(public postService : PostService, private router : Router,
+    private activated : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.myForm = new FormGroup({
+      nome: new FormControl("", { validators: [Validators.required, Validators.minLength(3)] }),
+      descricao: new FormControl("", { validators: [Validators.required] }),
+      image: new FormControl("", { validators: [Validators.required], asyncValidators: [mimeType] }),
+    });
+    this.activated.paramMap.subscribe((paramMap:ParamMap) => {
+      if (paramMap.has("id")) {
+        this.mode = "editar";
+        this.Id = paramMap.get("id");
+        this.isLoading = true;
+        this.postService.getPost(this.Id).subscribe((retorno :PostModel) => {
+          this.isLoading = false;
+          this.post = retorno;
+          this.myForm.setValue({
+            nome: retorno.titulo,
+            descricao: retorno.conteudo,
+          });
+        });
+      } else {
+        this.mode = "create";
+        this.Id = null;
+      }
+    });
   }
 
-  adicionarPost(nome: HTMLInputElement, post : HTMLTextAreaElement) {
-    if (nome.required) {
-      if (nome.value.trim().length === 0) {
-        return;
-      }
+  adicionarPost() {
+    // console.log(this.myForm);
+    if (this.myForm.invalid) {
+      return;
     }
-    this.postService.addPost(new PostModel(nome.value, post.value));
-    this.router.navigate(["/"]);
-    nome.value = "";
-    post.value = "";
+    if (this.mode === "create") {
+      this.postService.addPost(new PostModel(this.myForm.value.nome, this.myForm.value.descricao), this.myForm.value.image);
+    } else {
+      this.postService.updatePost(this.post._id, this.myForm.value.nome, this.myForm.value.descricao);
+    }
+
+    this.myForm.reset();
+  }
+
+  onImagePicked(event:Event) {
+    const file = (<HTMLInputElement>event.target).files[0];
+    this.myForm.patchValue({ image: file });
+    this.myForm.get("image").updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+    // console.log(this.myForm);
+  }
+
+  getNameImage() {
+    return (<File> this.myForm.value.image).name;
   }
 }

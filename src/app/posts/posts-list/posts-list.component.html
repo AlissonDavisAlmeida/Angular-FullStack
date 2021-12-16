@@ -1,8 +1,8 @@
 
 <div class="painel" >
-    
+    <mat-progress-spinner mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>  
 <mat-accordion >
-    
+     
     <mat-expansion-panel *ngFor="let post of posts ; let i = index" >
         <mat-expansion-panel-header>
             <mat-panel-title class="titulo" >
@@ -12,7 +12,7 @@
         </mat-expansion-panel-header>
         {{post.conteudo}}
         <mat-action-row class="expansionPanel">
-            <button mat-button color="accent">Editar</button>
+            <a  mat-button color="accent" [routerLink]="['/editar', post._id]" routerLinkActive="router-link-active" >Editar</a>
             <button mat-button color="warn" (click)="removerPet(post._id)">Remover</button>
         </mat-action-row>
     </mat-expansion-panel>

@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -12,6 +12,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
 import { PostsListComponent } from "./posts/posts-list/posts-list.component";
@@ -27,6 +29,7 @@ import { AppRoutingModule } from "./app-routing.module";
     PostCreateComponent,
     HeaderComponent,
     PostsListComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -38,9 +41,11 @@ import { AppRoutingModule } from "./app-routing.module";
     MatInputModule,
     MatCardModule,
     MatExpansionModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
