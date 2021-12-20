@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 const multer = require("multer");
 const Post = require("./models/post");
 
@@ -30,6 +31,7 @@ mongoose.connect("mongodb+srv://Alisson:MCyH82PPgMzG4hk@cluster0.pgaza.mongodb.n
   .then(() => console.log("Conectado com sucesso"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/images", express.static(path.join("backend/imagens")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -55,17 +57,41 @@ app.post("/api/posts/add", multer({ storage }).single("image"), (req, res, next)
 });
 
 app.get("/api/posts", (req, res, next) => {
-  Post.find((erro, dados) => res.status(200).json({
-    message: "Posts fetched successfully!",
-    posts: dados,
-  }));
+  const pageSize = +req.query.pageSize;
+  const currentPage = +req.query.page;
+  const postQuery = Post.find();
+  let dadosR = [];
+  if (pageSize !== 0 && currentPage !== 0) {
+    console.log(pageSize, currentPage);
+    postQuery.skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+
+  postQuery.then((dados) => {
+    dadosR = dados;
+    return Post.count();
+  })
+
+    .then((count) => {
+      res.status(200).json({
+        message: "Posts fetched successfully!",
+        posts: dadosR,
+        count,
+      });
+    });
 });
 
-app.put("/api/post/:id", (req, res, next) => {
+app.put("/api/post/:id", multer({ storage }).single("imagePath"), (req, res, next) => {
+  let { imagePath } = req.body;
+  if (req.file) {
+    const url = `${req.protocol}://${req.get("host")}`;
+    imagePath = `${url}/images/${req.file.filename}`;
+  }
   const post = new Post({
     _id: req.params.id,
     titulo: req.body.titulo,
     conteudo: req.body.conteudo,
+    imagePath,
   });
   Post.updateOne({
 

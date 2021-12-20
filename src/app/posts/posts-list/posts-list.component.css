@@ -13,3 +13,16 @@
 mat-progress-spinner{
     margin: auto;
 }
+.post-image{
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+.post-image img{
+    width: 15%;
+  
+}
+.panel{
+    text-align: center;
+    background-color: rgba(78, 78, 78, 0.699);
+}

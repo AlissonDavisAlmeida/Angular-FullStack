@@ -3,13 +3,16 @@
     <mat-progress-spinner mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>  
 <mat-accordion >
      
-    <mat-expansion-panel *ngFor="let post of posts ; let i = index" >
+    <mat-expansion-panel *ngFor="let post of posts ; let i = index" class="panel">
         <mat-expansion-panel-header>
             <mat-panel-title class="titulo" >
                 {{post.titulo}}                         
             </mat-panel-title>
            
         </mat-expansion-panel-header>
+        <div class="post-image">
+            <img [src]="post.imagePath" [alt]="post.titulo">
+        </div>
         {{post.conteudo}}
         <mat-action-row class="expansionPanel">
             <a  mat-button color="accent" [routerLink]="['/editar', post._id]" routerLinkActive="router-link-active" >Editar</a>
@@ -17,4 +20,9 @@
         </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>
+<mat-paginator *ngIf="posts != undefined" [length]="size"
+            [pageSize]="2"
+            [pageSizeOptions]="[1,2,3,5, 10, 25, 100]" style="background-color: rgba(78, 78, 78, 0.699);"
+            (page)="onPageChange($event)">
+</mat-paginator>
 </div>

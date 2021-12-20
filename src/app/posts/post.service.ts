@@ -9,9 +9,11 @@ import { PostModel } from "./PostModel.model";
 
 @Injectable({ providedIn: "root" })
 export class PostService {
-  private emitirAtualizacaoPosts = new Subject<PostModel[]>();
+  private emitirAtualizacaoPosts = new Subject<{ posts:PostModel[], postsCount:number }>();
 
   private posts : PostModel[] = [];
+
+  quantidade : number;
 
   constructor(private http : HttpClient, private router : Router) {
 
@@ -30,7 +32,7 @@ export class PostService {
       };
       console.log(posta);
       this.posts.push(posta);
-      this.emitirAtualizacaoPosts.next([...this.posts]);
+      this.emitirAtualizacaoPosts.next({ posts: this.posts, postsCount: this.quantidade });
       this.router.navigate(["/"]);
       // this.getPosts();
     });
@@ -45,35 +47,53 @@ export class PostService {
     return this.http.get(`http://localhost:3001/api/post/${id}`);
   }
 
-  getPosts() {
+  getPosts(pageSize:number = 3, page:number = 1) {
     this.http
-      .get<{ message: string; posts: any }>(
-      "http://localhost:3001/api/posts",
+      .get<{ message: string; posts: any, count:number }>(
+      `http://localhost:3001/api/posts?pageSize=${pageSize}&page=${page}`,
     )
-      .pipe(map((postData) => postData.posts.map((post) => ({
-        titulo: post.titulo,
-        conteudo: post.conteudo,
-        _id: post._id,
-        imagePath: post.imagePath,
-      }))))
+      .pipe(map((postData) => ({
+        posts: postData.posts.map((post) => ({
+          titulo: post.titulo,
+          conteudo: post.conteudo,
+          _id: post._id,
+          imagePath: post.imagePath,
+        })),
+        cont: postData.count,
+      })))
       .subscribe((transformedPosts) => {
-        this.posts = transformedPosts;
-        this.emitirAtualizacaoPosts.next([...this.posts]);
+        this.posts = transformedPosts.posts;
+        this.quantidade = transformedPosts.cont;
+        console.log(this.quantidade);
+        this.emitirAtualizacaoPosts.next({ posts: this.posts, postsCount: this.quantidade });
       });
 
     return this.posts;
   }
 
-  updatePost(id:string, titulo:string, conteudo:string) {
-    const post : PostModel = {
-      _id: id, titulo, conteudo, imagePath: null,
-    };
+  updatePost(id:string, titulo:string, conteudo:string, imagePath: File | string) {
+    let post: PostModel | FormData;
+    if (typeof (imagePath) === "object") {
+      post = new FormData();
+      post.append("id", id);
+      post.append("titulo", titulo);
+      post.append("conteudo", conteudo);
+      post.append("imagePath", imagePath, titulo);
+    } else {
+      post = {
+        _id: id, titulo, conteudo, imagePath,
+      };
+    }
+
     this.http.put(`http://localhost:3001/api/post/${id}/`, post).subscribe((retorno) => {
       const updatePosts = [...this.posts];
-      const oldPosIndex = updatePosts.findIndex((p) => p._id === post._id);
+      const oldPosIndex = updatePosts.findIndex((p) => p._id === id);
+      const post: PostModel = {
+        _id: id, titulo, conteudo, imagePath: "", /* retorno.imagePath, */
+      };
       updatePosts[oldPosIndex] = post;
       this.posts = updatePosts;
-      this.emitirAtualizacaoPosts.next([...this.posts]);
+      this.emitirAtualizacaoPosts.next({ posts: this.posts, postsCount: this.quantidade });
       this.router.navigate(["/"]);
     });
   }

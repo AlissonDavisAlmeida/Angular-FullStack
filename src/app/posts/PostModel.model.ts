@@ -5,7 +5,7 @@ export class PostModel {
 
   conteudo : string;
 
-  imagePath?: string;
+  imagePath: string;
 
   constructor(titulo, conteudo) {
     this.titulo = titulo;

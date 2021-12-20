@@ -32,7 +32,7 @@ export class PostCreateComponent implements OnInit {
     this.myForm = new FormGroup({
       nome: new FormControl("", { validators: [Validators.required, Validators.minLength(3)] }),
       descricao: new FormControl("", { validators: [Validators.required] }),
-      image: new FormControl("", { validators: [Validators.required], asyncValidators: [mimeType] }),
+      image: new FormControl(null, { validators: [Validators.required], asyncValidators: [mimeType] }),
     });
     this.activated.paramMap.subscribe((paramMap:ParamMap) => {
       if (paramMap.has("id")) {
@@ -40,11 +40,13 @@ export class PostCreateComponent implements OnInit {
         this.Id = paramMap.get("id");
         this.isLoading = true;
         this.postService.getPost(this.Id).subscribe((retorno :PostModel) => {
+          console.log(retorno);
           this.isLoading = false;
           this.post = retorno;
           this.myForm.setValue({
-            nome: retorno.titulo,
-            descricao: retorno.conteudo,
+            nome: this.post.titulo,
+            descricao: this.post.conteudo,
+            image: this.post.imagePath,
           });
         });
       } else {
@@ -62,7 +64,7 @@ export class PostCreateComponent implements OnInit {
     if (this.mode === "create") {
       this.postService.addPost(new PostModel(this.myForm.value.nome, this.myForm.value.descricao), this.myForm.value.image);
     } else {
-      this.postService.updatePost(this.post._id, this.myForm.value.nome, this.myForm.value.descricao);
+      this.postService.updatePost(this.post._id, this.myForm.value.nome, this.myForm.value.descricao, this.myForm.value.image);
     }
 
     this.myForm.reset();

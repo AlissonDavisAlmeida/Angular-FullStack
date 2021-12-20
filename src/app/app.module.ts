@@ -13,7 +13,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
 import { PostsListComponent } from "./posts/posts-list/posts-list.component";
@@ -39,9 +39,11 @@ import { AppRoutingModule } from "./app-routing.module";
     MatMenuModule,
     MatButtonModule,
     MatInputModule,
+    MatPaginatorModule,
     MatCardModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
