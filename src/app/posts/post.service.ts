@@ -27,12 +27,6 @@ export class PostService {
     postData.append("image", image, post.titulo);
 
     this.http.post<{ message:string, post: PostModel }>("http://localhost:3001/api/posts/add", postData).subscribe((valor) => {
-      const posta : PostModel = {
-        _id: valor.post._id, titulo: valor.post.titulo, conteudo: valor.post.conteudo, imagePath: valor.post.imagePath,
-      };
-      console.log(posta);
-      this.posts.push(posta);
-      this.emitirAtualizacaoPosts.next({ posts: this.posts, postsCount: this.quantidade });
       this.router.navigate(["/"]);
       // this.getPosts();
     });
@@ -86,14 +80,6 @@ export class PostService {
     }
 
     this.http.put(`http://localhost:3001/api/post/${id}/`, post).subscribe((retorno) => {
-      const updatePosts = [...this.posts];
-      const oldPosIndex = updatePosts.findIndex((p) => p._id === id);
-      const post: PostModel = {
-        _id: id, titulo, conteudo, imagePath: "", /* retorno.imagePath, */
-      };
-      updatePosts[oldPosIndex] = post;
-      this.posts = updatePosts;
-      this.emitirAtualizacaoPosts.next({ posts: this.posts, postsCount: this.quantidade });
       this.router.navigate(["/"]);
     });
   }

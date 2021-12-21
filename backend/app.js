@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const multer = require("multer");
 const Post = require("./models/post");
+const userRoutes = require("./user");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -121,5 +122,7 @@ app.delete("/api/posts/:id", (req, res) => {
   });
   res.status(200).json({ mensagem: "Post deletado" });
 });
+
+app.use("/api/user", userRoutes);
 
 module.exports = app;

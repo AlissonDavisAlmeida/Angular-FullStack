@@ -1,0 +1,31 @@
+.principal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   width: 50vh;
+   margin: auto;
+   margin-top: 10%;
+    background-color: rgba(66, 59, 59, 0.685);
+    color: rgb(252, 252, 252);
+    border-radius: 20px;
+}
+mat-progress-spinner{
+    margin: auto;
+}
+
+.formulario{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.fonte-login{
+  padding: 10px;
+  font-family: 'Pushster', cursive;
+  font-weight: 400;
+  font-size: 2rem;
+  color: rgb(247, 243, 243);
+}
+

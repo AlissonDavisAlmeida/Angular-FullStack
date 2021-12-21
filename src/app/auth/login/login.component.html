@@ -1,0 +1,21 @@
+<mat-card class="principal">
+    <mat-progress-spinner mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+    <form class="formulario" (submit)="login(myForm)" #myForm="ngForm">
+        <mat-card-title class="fonte-login" >Tela de Login</mat-card-title>
+        <mat-form-field appearance="outline">
+            <mat-label>Login</mat-label>
+            <input matInput placeholder="Email" type="email" name="email" #email="ngModel" required ngModel>
+            <mat-error *ngIf="!email.valid">Insira um E-mail válido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+            <input type="password" matInput placeholder="Senha" name="senha" required #senha="ngModel" ngModel>
+
+            <mat-error *ngIf="">Insira uma senha válida</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary"  type="submit"
+            >Login</button>
+
+    </form>
+</mat-card>

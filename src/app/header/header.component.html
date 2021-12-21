@@ -3,13 +3,19 @@
         <mat-icon aria-hidden="false" aria-label=" icon" class="icone" >pets</mat-icon>
 
         <span>PetShop Racine</span>
+
     </a>
- 
+    <a routerLink="/login" class="link-login" style="text-decoration: none; color: inherit; cursor: pointer;">
+        <button mat-button class="login">Login<mat-icon>login</mat-icon></button>
+    </a>
+    <a routerLink="/signup" class="link-signup" style="text-decoration: none; color: inherit; cursor: pointer;">
+        <button mat-button class="login">Cadastrar<mat-icon>fingerprint</mat-icon></button>
+    </a>
 
      <button  mat-button [matMenuTriggerFor]="menu" color="primary" class="botao">Cadastrar Pet<mat-icon>add</mat-icon></button>
      <mat-menu #menu="matMenu">
          <button mat-menu-item (click)="irParaAdicionar()">Adicionar Pet</button>
-         <button mat-menu-item>Item 2</button>
+         
      </mat-menu>
         
     
