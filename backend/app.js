@@ -63,7 +63,6 @@ app.get("/api/posts", (req, res, next) => {
   const postQuery = Post.find();
   let dadosR = [];
   if (pageSize !== 0 && currentPage !== 0) {
-    console.log(pageSize, currentPage);
     postQuery.skip(pageSize * (currentPage - 1))
       .limit(pageSize);
   }

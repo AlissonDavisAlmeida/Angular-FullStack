@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth.service";
+import { AuthModel } from "../auth-data.model";
 
 @Component({
   selector: "app-signup",
@@ -9,12 +12,19 @@ import { NgForm } from "@angular/forms";
 export class SignupComponent implements OnInit {
   isLoading = false;
 
-  constructor() { }
+  constructor(private authService : AuthService, private rota : Router) { }
 
   ngOnInit(): void {
   }
 
   cadastrar(myForm : NgForm) {
-    console.log(myForm);
+    if (myForm.invalid) {
+      return;
+    }
+    const auth : AuthModel = { email: myForm.form.value.email, senha: myForm.form.value.senha };
+    this.authService.createUser(auth.email, auth.senha).subscribe((retorno) => {
+      console.log(retorno);
+      this.rota.navigate(["/"]);
+    });
   }
 }
