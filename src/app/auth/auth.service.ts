@@ -10,4 +10,10 @@ export class AuthService {
   createUser(email : string, senha : string) {
     return this.http.post("http://localhost:3001/api/user/signup", { email, senha });
   }
+
+  login(email: string, senha : string) {
+    this.http.post("http://localhost:3001/api/user/login", { email, senha }).subscribe((retorno) => {
+      console.log(retorno);
+    });
+  }
 }
