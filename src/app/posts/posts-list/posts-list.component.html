@@ -14,7 +14,7 @@
             <img [src]="post.imagePath" [alt]="post.titulo">
         </div>
         {{post.conteudo}}
-        <mat-action-row class="expansionPanel">
+        <mat-action-row class="expansionPanel" *ngIf="isAuthenticate">
             <a  mat-button color="accent" [routerLink]="['/editar', post._id]" routerLinkActive="router-link-active" >Editar</a>
             <button mat-button color="warn" (click)="removerPet(post._id)">Remover</button>
         </mat-action-row>

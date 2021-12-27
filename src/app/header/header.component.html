@@ -5,14 +5,17 @@
         <span>PetShop Racine</span>
 
     </a>
-    <a routerLink="/login" class="link-login" style="text-decoration: none; color: inherit; cursor: pointer;">
+    <a routerLink="/login" *ngIf="!isValidToken" class="link-login" style="text-decoration: none; color: inherit; cursor: pointer;">
         <button mat-button class="login">Login<mat-icon>login</mat-icon></button>
     </a>
-    <a routerLink="/signup" class="link-signup" style="text-decoration: none; color: inherit; cursor: pointer;">
+    <a routerLink="/signup" *ngIf="!isValidToken" class="link-signup" style="text-decoration: none; color: inherit; cursor: pointer;">
         <button mat-button class="login">Cadastrar<mat-icon>fingerprint</mat-icon></button>
     </a>
+    <a class="link-logout" *ngIf="isValidToken" style="text-decoration: none; color: inherit; cursor: pointer;">
+        <button mat-button class="login" (click)="logout()">Sair<mat-icon>logout</mat-icon></button>
+    </a>
 
-     <button  mat-button [matMenuTriggerFor]="menu" color="primary" class="botao">Cadastrar Pet<mat-icon>add</mat-icon></button>
+     <button  mat-button [matMenuTriggerFor]="menu" *ngIf="isValidToken" color="primary" class="botao">Cadastrar Pet<mat-icon>add</mat-icon></button>
      <mat-menu #menu="matMenu">
          <button mat-menu-item (click)="irParaAdicionar()">Adicionar Pet</button>
          

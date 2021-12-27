@@ -4,6 +4,7 @@ const path = require("path");
 const multer = require("multer");
 const Post = require("./models/post");
 const userRoutes = require("./user");
+const checkAuth = require("./middleware/check-auth");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -37,24 +38,22 @@ app.use("/images", express.static(path.join("backend/imagens")));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-Width, Content-Type, Accept, X-Auth-Token");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-Width, Content-Type, Accept, X-Auth-Token, Authorization, token");
 
   next();
 });
 
-app.post("/api/posts/add", multer({ storage }).single("image"), (req, res, next) => {
+app.post("/api/posts/add", checkAuth, multer({ storage }).single("image"), (req, res, next) => {
   const url = `${req.protocol}://${req.get("host")}`;
   const post = new Post({
     titulo: req.body.titulo,
     conteudo: req.body.conteudo,
     imagePath: `${url}/images/${req.file.filename}`,
   });
-  post.save().then((saveDoc) => {
-    res.status(201).json({
-      message: "Adicionado com sucesso",
-      post: saveDoc,
-    });
-  });
+  post.save().then((saveDoc) => res.status(201).json({
+    message: "Adicionado com sucesso",
+    post: saveDoc,
+  }));
 });
 
 app.get("/api/posts", (req, res, next) => {
@@ -72,16 +71,14 @@ app.get("/api/posts", (req, res, next) => {
     return Post.count();
   })
 
-    .then((count) => {
-      res.status(200).json({
-        message: "Posts fetched successfully!",
-        posts: dadosR,
-        count,
-      });
-    });
+    .then((count) => res.status(200).json({
+      message: "Posts fetched successfully!",
+      posts: dadosR,
+      count,
+    }));
 });
 
-app.put("/api/post/:id", multer({ storage }).single("imagePath"), (req, res, next) => {
+app.put("/api/post/:id", checkAuth, multer({ storage }).single("imagePath"), (req, res, next) => {
   let { imagePath } = req.body;
   if (req.file) {
     const url = `${req.protocol}://${req.get("host")}`;
@@ -114,7 +111,7 @@ app.get("/api/post/:id", (req, res) => {
   });
 });
 
-app.delete("/api/posts/:id", (req, res) => {
+app.delete("/api/posts/:id", checkAuth, (req, res) => {
   console.log(req.params.id);
   Post.deleteOne({ _id: req.params.id }).then((retorno) => {
     console.log(retorno);

@@ -26,7 +26,7 @@ export class PostService {
     postData.append("conteudo", post.conteudo);
     postData.append("image", image, post.titulo);
 
-    this.http.post<{ message:string, post: PostModel }>("http://localhost:3001/api/posts/add", postData).subscribe((valor) => {
+    this.http.post<{ message:string, post: PostModel }>("http://localhost:3001/api/posts/add", postData, { headers: { token: "olá" } }).subscribe((valor) => {
       this.router.navigate(["/"]);
       // this.getPosts();
     });

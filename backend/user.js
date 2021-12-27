@@ -33,8 +33,8 @@ rotas.post("/login", (req, res) => {
     if (user) {
       bcrypt.compare(req.body.senha, user.senha).then((retorno) => {
         if (retorno) {
-          const token = jwt.sign({ email: user.email, userId: user._id }, "oakdaofaodaodjaodf=0", { expiresIn: "1h" });
-          res.status(200).json({
+          const token = jwt.sign({ email: user.email, userId: user._id }, "oakdaofaodaodjaodf0", { expiresIn: "1h" });
+          return res.status(200).json({
             mensagem: "Login feito com sucesso",
             token,
           });
