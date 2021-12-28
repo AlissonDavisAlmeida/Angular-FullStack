@@ -37,8 +37,8 @@ export class AuthService {
       if (retorno.token) {
         this.isAuthenticate = true;
         this.tokenEmissor.next(true);
+        this.rota.navigate(["/"]);
       }
-      this.rota.navigate(["/"]);
     });
   }
 
@@ -46,5 +46,6 @@ export class AuthService {
     this.token = null;
     this.isAuthenticate = false;
     this.tokenEmissor.next(false);
+    this.rota.navigate(["/login"]);
   }
 }
