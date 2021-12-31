@@ -49,6 +49,7 @@ app.post("/api/posts/add", checkAuth, multer({ storage }).single("image"), (req,
     titulo: req.body.titulo,
     conteudo: req.body.conteudo,
     imagePath: `${url}/images/${req.file.filename}`,
+    criador: req.userData.userId,
   });
   post.save().then((saveDoc) => res.status(201).json({
     message: "Adicionado com sucesso",

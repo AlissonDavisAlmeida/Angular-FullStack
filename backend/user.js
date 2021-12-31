@@ -37,6 +37,7 @@ rotas.post("/login", (req, res) => {
           return res.status(200).json({
             mensagem: "Login feito com sucesso",
             token,
+            expiresIn: "3600",
           });
         }
         return res.status(401).json({

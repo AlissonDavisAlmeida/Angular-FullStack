@@ -27,6 +27,7 @@ export class PostService {
     postData.append("image", image, post.titulo);
 
     this.http.post<{ message:string, post: PostModel }>("http://localhost:3001/api/posts/add", postData, { headers: { token: "olá" } }).subscribe((valor) => {
+      console.log(valor);
       this.router.navigate(["/"]);
       // this.getPosts();
     });
@@ -52,13 +53,14 @@ export class PostService {
           conteudo: post.conteudo,
           _id: post._id,
           imagePath: post.imagePath,
+          criador: post.criador,
         })),
         cont: postData.count,
       })))
       .subscribe((transformedPosts) => {
         this.posts = transformedPosts.posts;
         this.quantidade = transformedPosts.cont;
-        console.log(this.quantidade);
+        console.log(this.posts);
         this.emitirAtualizacaoPosts.next({ posts: this.posts, postsCount: this.quantidade });
       });
 

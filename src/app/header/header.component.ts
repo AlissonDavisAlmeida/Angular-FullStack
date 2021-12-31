@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isValidToken = this.authService.getIsAuthenticate();
     this.isValidSubscription = this.authService.getTokenEmissor().subscribe((token) => {
       console.log(this.isValidToken);
       this.isValidToken = token;
