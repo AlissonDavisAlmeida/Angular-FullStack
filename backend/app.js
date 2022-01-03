@@ -90,15 +90,23 @@ app.put("/api/post/:id", checkAuth, multer({ storage }).single("imagePath"), (re
     titulo: req.body.titulo,
     conteudo: req.body.conteudo,
     imagePath,
+    criador: req.userData.userId,
   });
   Post.updateOne({
 
     // eslint-disable-next-line no-undef
     _id: req.params.id,
+    criador: req.userData.userId,
 
   }, post).then((resultado) => {
-    console.log(`${post.titulo} atualizado com sucesso`);
-    res.status(201).json({ message: "atualizado com sucesso" });
+    if (resultado.nModified > 0) {
+      res.status(201).json({ message: "atualizado com sucesso" });
+      console.log(`${post.titulo} atualizado com sucesso`);
+    } else {
+      res.status(401).json({
+        message: "Usuário não autorizado para editar esse Post",
+      });
+    }
   });
 });
 
@@ -114,10 +122,15 @@ app.get("/api/post/:id", (req, res) => {
 
 app.delete("/api/posts/:id", checkAuth, (req, res) => {
   console.log(req.params.id);
-  Post.deleteOne({ _id: req.params.id }).then((retorno) => {
-    console.log(retorno);
+  Post.deleteOne({ _id: req.params.id, criador: req.userData.userId }).then((retorno) => {
+    if (retorno.n > 0) {
+      res.status(201).json({ mensagem: "Excluido com sucesso" });
+    } else {
+      res.status(401).json({
+        mensagem: "Usuário não autorizado para excluir esse Post",
+      });
+    }
   });
-  res.status(200).json({ mensagem: "Post deletado" });
 });
 
 app.use("/api/user", userRoutes);

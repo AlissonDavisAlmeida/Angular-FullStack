@@ -47,6 +47,7 @@ export class PostCreateComponent implements OnInit {
             nome: this.post.titulo,
             descricao: this.post.conteudo,
             image: this.post.imagePath,
+
           });
         });
       } else {

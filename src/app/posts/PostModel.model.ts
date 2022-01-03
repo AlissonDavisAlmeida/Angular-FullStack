@@ -5,6 +5,8 @@ export class PostModel {
 
   conteudo : string;
 
+  criador : string;
+
   imagePath: string;
 
   constructor(titulo, conteudo) {

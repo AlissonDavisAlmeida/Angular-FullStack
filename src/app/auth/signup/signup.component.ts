@@ -21,10 +21,15 @@ export class SignupComponent implements OnInit {
     if (myForm.invalid) {
       return;
     }
+    this.isLoading = true;
     const auth : AuthModel = { email: myForm.form.value.email, senha: myForm.form.value.senha };
     this.authService.createUser(auth.email, auth.senha).subscribe((retorno) => {
       console.log(retorno);
+      this.isLoading = false;
       this.rota.navigate(["/"]);
+    }, (err) => {
+      this.isLoading = false;
+      console.log(err);
     });
   }
 }

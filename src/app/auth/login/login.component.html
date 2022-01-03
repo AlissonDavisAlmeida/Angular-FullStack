@@ -4,7 +4,7 @@
         <mat-card-title class="fonte-login" >Tela de Login</mat-card-title>
         <mat-form-field appearance="outline">
             <mat-label>Login</mat-label>
-            <input matInput placeholder="Email" type="email" name="email" #email="ngModel" required ngModel>
+            <input matInput placeholder="Email" type="email" name="email" #email="ngModel" email required ngModel>
             <mat-error *ngIf="!email.valid">Insira um E-mail válido</mat-error>
         </mat-form-field>
 

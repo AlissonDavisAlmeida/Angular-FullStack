@@ -77,7 +77,7 @@ export class PostService {
       post.append("imagePath", imagePath, titulo);
     } else {
       post = {
-        _id: id, titulo, conteudo, imagePath,
+        _id: id, titulo, conteudo, imagePath, criador: null,
       };
     }
 

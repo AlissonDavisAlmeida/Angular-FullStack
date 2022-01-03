@@ -38,10 +38,14 @@ rotas.post("/login", (req, res) => {
             mensagem: "Login feito com sucesso",
             token,
             expiresIn: "3600",
+            userId: user._id,
           });
         }
         return res.status(401).json({
           mensagem: "Falha no Login, cadastre-se",
+          erro: {
+            message: "Falha no Login",
+          },
         });
       }).catch((err) => res.status(401).json({
         mensagem: "Erro no login, cadastre-se",
@@ -50,6 +54,9 @@ rotas.post("/login", (req, res) => {
     } else {
       return res.status(401).json({
         mensagem: "Não existe o endereço de email, cadastre-se",
+        erro: {
+          message: "Não existe o endereço de email, cadastre-se",
+        },
       });
     }
   });
