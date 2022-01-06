@@ -4,17 +4,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
-import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatButtonModule } from "@angular/material/button";
-import { MatInputModule } from "@angular/material/input";
-import { MatCardModule } from "@angular/material/card";
-import { MatExpansionModule } from "@angular/material/expansion";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatPaginatorModule } from "@angular/material/paginator";
-import { MatDialogModule } from "@angular/material/dialog";
 
 import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
@@ -28,6 +18,7 @@ import { SignupComponent } from "./auth/signup/signup.component";
 import { AuthInterceptor } from "./auth/auth.interceptor";
 import { ErroInterceptor } from "./erro.interceptor";
 import { ErrorComponent } from "./error/error.component";
+import { AngularMaterialModule } from "./angular-material/angular-material.module";
 
 @NgModule({
   declarations: [
@@ -44,18 +35,7 @@ import { ErrorComponent } from "./error/error.component";
   imports: [
     BrowserModule,
     FormsModule, BrowserAnimationsModule,
-
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-
+    AngularMaterialModule,
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
