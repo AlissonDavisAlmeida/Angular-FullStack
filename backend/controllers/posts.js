@@ -1,3 +1,4 @@
+const { map } = require("rxjs");
 const Post = require("../models/post");
 
 exports.adicionarPost = (req, res, next) => {
@@ -55,6 +56,7 @@ exports.atualizarPost = (req, res, next) => {
     imagePath,
     criador: req.userData.userId,
   });
+
   Post.updateOne({
 
     // eslint-disable-next-line no-undef
@@ -62,7 +64,8 @@ exports.atualizarPost = (req, res, next) => {
     criador: req.userData.userId,
 
   }, post).then((resultado) => {
-    if (resultado.nModified > 0) {
+    console.log(resultado);
+    if (resultado.modifiedCount > 0) {
       res.status(201).json({ message: "atualizado com sucesso" });
       console.log(`${post.titulo} atualizado com sucesso`);
     } else {
@@ -86,12 +89,15 @@ exports.postID = (req, res) => {
 exports.removerPost = (req, res) => {
   console.log(req.params.id);
   Post.deleteOne({ _id: req.params.id, criador: req.userData.userId }).then((retorno) => {
-    if (retorno.n > 0) {
-      res.status(201).json({ mensagem: "Excluido com sucesso" });
-    } else {
-      res.status(401).json({
-        mensagem: "Usuário não autorizado para excluir esse Post",
-      });
+    const novo = { ...retorno };
+    console.log(novo);
+    if (retorno.deletedCount > 0) {
+      return res.status(201).json({ message: "Excluido com sucesso" });
     }
+    return res.status(401).json({
+      message: "Usuário não autorizado para excluir esse Post",
+    });
+  }, (err) => {
+    console.log(`erro :${err}`);
   });
 };

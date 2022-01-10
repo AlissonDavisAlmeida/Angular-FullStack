@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 
+import { environment } from "src/environments/environment";
 import { PostModel } from "./PostModel.model";
 
 @Injectable({ providedIn: "root" })
@@ -26,7 +27,7 @@ export class PostService {
     postData.append("conteudo", post.conteudo);
     postData.append("image", image, post.titulo);
 
-    this.http.post<{ message:string, post: PostModel }>("http://localhost:3001/api/posts/add", postData, { headers: { token: "olá" } }).subscribe((valor) => {
+    this.http.post<{ message:string, post: PostModel }>(`${environment.apiUrl}/posts/add`, postData, { headers: { token: "olá" } }).subscribe((valor) => {
       console.log(valor);
       this.router.navigate(["/"]);
       // this.getPosts();
@@ -39,13 +40,13 @@ export class PostService {
 
   getPost(id : string) {
     this.getPosts();
-    return this.http.get(`http://localhost:3001/api/post/${id}`);
+    return this.http.get(`${environment.apiUrl}/post/${id}`);
   }
 
   getPosts(pageSize:number = 3, page:number = 1) {
     this.http
       .get<{ message: string; posts: any, count:number }>(
-      `http://localhost:3001/api/posts?pageSize=${pageSize}&page=${page}`,
+      `${environment.apiUrl}/posts?pageSize=${pageSize}&page=${page}`,
     )
       .pipe(map((postData) => ({
         posts: postData.posts.map((post) => ({
@@ -81,15 +82,17 @@ export class PostService {
       };
     }
 
-    this.http.put(`http://localhost:3001/api/post/${id}/`, post).subscribe((retorno) => {
+    this.http.put(`${environment.apiUrl}/post/${id}/`, post).subscribe((retorno) => {
       this.router.navigate(["/"]);
     });
   }
 
   deletarPet(id : string) {
     console.log(id);
-    this.http.delete(`http://localhost:3001/api/posts/${id}`).subscribe((retorno) => {
+    this.http.delete(`${environment.apiUrl}/posts/${id}`).subscribe((retorno) => {
+      console.log(retorno);
       this.getPosts();
+      this.router.navigate([""]);
     });
   }
 }

@@ -14,7 +14,7 @@ const {
 
 const app = express();
 
-mongoose.connect("mongodb+srv://Alisson:MCyH82PPgMzG4hk@cluster0.pgaza.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+mongoose.connect(`mongodb+srv://Alisson:${process.env.MONGO_ATLAS_SENHA}@cluster0.pgaza.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
   .then(() => console.log("Conectado com sucesso"));
 
 app.use(express.json());

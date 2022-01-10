@@ -5,10 +5,10 @@
         <span>PetShop Racine</span>
 
     </a>
-    <a routerLink="/login" *ngIf="!isValidToken" class="link-login" style="text-decoration: none; color: inherit; cursor: pointer;">
+    <a routerLink="/auth/login" *ngIf="!isValidToken" class="link-login" style="text-decoration: none; color: inherit; cursor: pointer;">
         <button mat-button class="login">Login<mat-icon>login</mat-icon></button>
     </a>
-    <a routerLink="/signup" *ngIf="!isValidToken" class="link-signup" style="text-decoration: none; color: inherit; cursor: pointer;">
+    <a routerLink="/auth/signup" *ngIf="!isValidToken" class="link-signup" style="text-decoration: none; color: inherit; cursor: pointer;">
         <button mat-button class="login">Cadastrar<mat-icon>fingerprint</mat-icon></button>
     </a>
     <a class="link-logout" *ngIf="isValidToken" style="text-decoration: none; color: inherit; cursor: pointer;">
